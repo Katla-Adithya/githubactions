@@ -6,43 +6,38 @@ jobs:
     name: JOB1
     runs-on: ubuntu-latest
     steps:
-      - name: Running single command in job1
-        run: echo "Hi , this is my first GitHub workflow"
-      - name: checking os Release for Github hosted runner
-        run: cat /etc/os-release
-      - name: Calling sleep
-        run: sleep 20
-  job2:
-     name: JOB2
-     runs-on: ubuntu-latest
-     steps:
-       - name: checking the hostname for runner
-         run: hostname
-       - name: running multiple commands
-         run: |
-           echo " Hi from adithya"
-           echo " current time is 'date' "
-           sleep 20
-  job3:
-    name: JOB3
-    needs: job1
-    runs-on: windows-latest
-    steps:
-      - name: job with single dependency
-        run: sleep 10
-      - name: checking runner info
-        shell: pwsh
-        run: get-computerinfo
-  job4:
-    name: JOB4
-    needs: [job1 , job2 , job3]
-    runs-on: macos-latest
-    steps:
-      - name: job for multiple dependencys
-        run: sleep 10
-      - name: checking runner info
-        run: sw_vers
+    - name: Step-1
+      run: |
+        pwd
+        ls -ltr
+        hostname
+    - name: step-2 - Checkout
+      uses: actions/checkout@v7.0.0
+    - name: step-3
+      run: |
+        echo `pwd` >> myartifact.txt
+        mkdir artifacts
+        echo `ls -ltr` >> artifacts/list.txt
+        echo `hostname` >> artifacts/hostname.txt
+    - name: Upload single file
+      uses: actions/upload-artifact@v7.0.1
+      with:
+        name: single_file
+        path: ./myartifact.txt 
+    - name: Upload from directory
+      uses: actions/upload-artifact@v7.0.1
+      with:
+         name: directory_artifacts
+         path: artifacts/
+    - name: Upload from multiple paths with exclusions
+      uses: actions/upload-artifact@v7.0.1
+      with:
+        name: multiple_paths_with_execlusions
+        path: |
+          ./myartifact.txt
+          artifacts/
+          !**/hostname.txt
     
-      
+     
     
  
