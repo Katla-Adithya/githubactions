@@ -9,6 +9,6 @@ jobs:
       - name: Running single command in job1
         run: echo "Hi , this is my first GitHub workflow"
       - name: checking os Release for Github hosted runner
-        run: cat / etc/os-release
+        run: cat /etc/os-release
       - name: Calling sleep
         run: sleep 20
