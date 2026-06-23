@@ -12,3 +12,15 @@ jobs:
         run: cat /etc/os-release
       - name: Calling sleep
         run: sleep 20
+  job2:
+     name: JOB2
+     runs-on: ubuntu-latest
+     steps:
+       - name: checking the hostname for runner
+         run: hostname
+       - name: running multiple commands
+         run: |
+           echo " Hi from adithya"
+           echo " current time is 'date' "
+           sleep 20
+     
